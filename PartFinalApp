@@ -1,0 +1,25 @@
+
+    def predict(self):
+        cluster = int(self.cluster_entry.get())
+
+        date = self.date_entry.get()
+
+        api = API(date)
+        api.load_model()
+
+        results_dict = api.predict()
+
+        for result in results_dict:
+            if result['cluster'] == cluster:
+                self.results_label.configure(text=f"Стоимость поездки: {result['fare_amount']}, Время поездки: {result['trip_time']}")
+
+    def help_info(self):
+        api = API("")
+        help_text = api.help_info()
+        self.results_label.configure(text=help_text)
+
+
+
+root = tk.Tk()
+app = App(root)
+root.mainloop()
